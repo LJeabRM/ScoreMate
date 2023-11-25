@@ -411,6 +411,8 @@ int main()
     int maxAttempts = 5;  // Maximum number of attempts
     int currentAttempt = 0;
 
+    printf("-------- Welcome to ScoreMate --------\n");
+    
     // Loop to attempt opening the file
     do 
     {
