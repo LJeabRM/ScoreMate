@@ -24,16 +24,14 @@ size_t findMaxNameLength(struct Student students[], int numStudents) {
 }
 
 // Function to print table header
-void printTableHeader(size_t maxNameLength) 
-{
-    printf("\n%-10s | %-*s | %s\n", "Student ID", (int)maxNameLength + 2, "Name", "Score");
+void printTableHeader(size_t maxNameLength) {
+    printf("\n%-10s | %-*s | %s\n", "Student ID", (int)maxNameLength, "Name", "Score");
     printf("--------------------------------------\n");
 }
 
 // Function to print a student's information in table format
-void printStudentInfo(struct Student student, size_t maxNameLength)
-{
-    printf("%-10s | %-*s | %.2lf\n", student.id, (int)maxNameLength + 2, student.name, student.score);
+void printStudentInfo(struct Student student, size_t maxNameLength) {
+    printf("%-10s | %-*s | %.2lf\n", student.id, (int)maxNameLength, student.name, student.score);
 }
 
 
@@ -173,8 +171,7 @@ void addStudent(struct Student students[], int *numStudents, char filename[100])
 
 
 // 4. Function to search score by student ID
-void searchScoreByStudentID(struct Student students[], int numStudents) 
-{
+void searchScoreByStudentID(struct Student students[], int numStudents) {
     char searchID[6];
 
     // Get user input for student ID to search
@@ -191,19 +188,16 @@ void searchScoreByStudentID(struct Student students[], int numStudents)
 
     // Iterate through students to find and display the score
     for (int i = 0; i < numStudents; i++) {
-        if (strcmp(students[i].id, searchID) == 0) 
-        {
+        if (strcmp(students[i].id, searchID) == 0) {
             // Print the result in the desired format
             printStudentInfo(students[i], maxNameLength);
-            printf("\n\n");
             found = 1;
             break;
         }
     }
 
     // Print a line separator after the result
-    if (!found) 
-    {
+    if (!found) {
         printf("\nStudent ID not found\n\n");
     }
 }
@@ -213,8 +207,6 @@ void sortAscending(struct Student students[], int numStudents)
 {
     // Find the maximum length of names
     size_t maxNameLength = findMaxNameLength(students, numStudents);
-
-    printf("\nSort scores in ascending order :\n");
 
     // Print table header
     printTableHeader(maxNameLength);
@@ -247,8 +239,6 @@ void sortDescending(struct Student students[], int numStudents)
 {
     // Find the maximum length of names
     size_t maxNameLength = findMaxNameLength(students, numStudents);
-
-    printf("\nSort scores in descending order :\n");
 
     // Print table header
     printTableHeader(maxNameLength);
@@ -374,12 +364,12 @@ void generateSummary(struct Student students[], int numStudents)
 
         // Save to file
         FILE *summaryFile = fopen("Summary.txt", "w");
-        fprintf(summaryFile, "%-10s | %-*s | %-6s\n", "Student ID", (int)maxNameLength + 2, "Name", "Score");
+        fprintf(summaryFile, "%-10s | %-*s | %-6s\n", "Student ID", (int)maxNameLength, "Name", "Score");
         fprintf(summaryFile, "--------------------------------------\n");
 
         for (int i = 0; i < numStudents; i++) 
         {
-            fprintf(summaryFile, "%-10s | %-*s | %.2lf\n", students[i].id, (int)maxNameLength + 2, students[i].name, students[i].score);
+            fprintf(summaryFile, "%-10s | %-*s | %.2lf\n", students[i].id, (int)maxNameLength, students[i].name, students[i].score);
         }
 
         // Print separator line
@@ -411,8 +401,6 @@ int main()
     int maxAttempts = 5;  // Maximum number of attempts
     int currentAttempt = 0;
 
-    printf("-------- Welcome to ScoreMate --------\n");
-    
     // Loop to attempt opening the file
     do 
     {
@@ -518,7 +506,6 @@ int main()
 
             case 9:
                 printf("End of program. Goodbye.\n");
-                printf("-----------------------------------------\n");
                 break;
 
             default:
