@@ -24,14 +24,16 @@ size_t findMaxNameLength(struct Student students[], int numStudents) {
 }
 
 // Function to print table header
-void printTableHeader(size_t maxNameLength) {
-    printf("\n%-10s | %-*s | %s\n", "Student ID", (int)maxNameLength, "Name", "Score");
+void printTableHeader(size_t maxNameLength) 
+{
+    printf("\n%-10s | %-*s | %s\n", "Student ID", (int)maxNameLength + 2, "Name", "Score");
     printf("--------------------------------------\n");
 }
 
 // Function to print a student's information in table format
-void printStudentInfo(struct Student student, size_t maxNameLength) {
-    printf("%-10s | %-*s | %.2lf\n", student.id, (int)maxNameLength, student.name, student.score);
+void printStudentInfo(struct Student student, size_t maxNameLength)
+{
+    printf("%-10s | %-*s | %.2lf\n", student.id, (int)maxNameLength + 2, student.name, student.score);
 }
 
 
@@ -94,6 +96,7 @@ void findAverageSD(struct Student students[], int numStudents)
     }
 }
 
+
 // 3. Function to add student score
 void addStudent(struct Student students[], int *numStudents, char filename[100]) 
 {
@@ -142,10 +145,70 @@ void addStudent(struct Student students[], int *numStudents, char filename[100])
         } while (1);
 
         // Continue with the rest of the input
-        printf("Name: ");
-        scanf("%s", name);
-        printf("Score: ");
-        scanf("%lf", &score);
+        do 
+        {
+            printf("Name: ");
+            scanf("%s", name);
+
+            // Check if the entered name contains only letters
+            int isValidName = 1;
+            for (int i = 0; i < strlen(name); i++) 
+            {
+                if (!isalpha(name[i])) 
+                {
+                    isValidName = 0;
+                    break;
+                }
+            }
+
+            if (!isValidName) 
+            {
+                printf("Invalid name format. It should contain only letters.\n");
+
+                char retryOption;
+                printf("Do you want to enter a new name? (y/n): ");
+                scanf(" %c", &retryOption);
+
+                if (retryOption == 'n' || retryOption == 'N') 
+                {
+                    // Go back to the main menu
+                    return;
+                }
+            } 
+            else 
+            {
+                break;
+            }
+
+        } while (1);
+
+        // Continue with the rest of the input
+        do 
+        {
+            printf("Score: ");
+            scanf("%lf", &score);
+
+            // Check if the score is a valid number between 0 and 100
+            if (score < 0 || score > 100 || isnan(score)) 
+            {
+                printf("Invalid score format. It should be a number between 0 and 100.\n");
+
+                char retryOption;
+                printf("Do you want to enter a new score? (y/n): ");
+                scanf(" %c", &retryOption);
+
+                if (retryOption == 'n' || retryOption == 'N') 
+                {
+                    // Go back to the main menu
+                    return;
+                }
+            } 
+            else 
+            {
+                break;
+            }
+
+        } while (1);
 
         // Copy data to the next available position in the array
         strcpy(students[*numStudents].id, id);
@@ -170,8 +233,10 @@ void addStudent(struct Student students[], int *numStudents, char filename[100])
 }
 
 
+
 // 4. Function to search score by student ID
-void searchScoreByStudentID(struct Student students[], int numStudents) {
+void searchScoreByStudentID(struct Student students[], int numStudents) 
+{
     char searchID[6];
 
     // Get user input for student ID to search
@@ -188,16 +253,19 @@ void searchScoreByStudentID(struct Student students[], int numStudents) {
 
     // Iterate through students to find and display the score
     for (int i = 0; i < numStudents; i++) {
-        if (strcmp(students[i].id, searchID) == 0) {
+        if (strcmp(students[i].id, searchID) == 0) 
+        {
             // Print the result in the desired format
             printStudentInfo(students[i], maxNameLength);
+            printf("\n\n");
             found = 1;
             break;
         }
     }
 
     // Print a line separator after the result
-    if (!found) {
+    if (!found) 
+    {
         printf("\nStudent ID not found\n\n");
     }
 }
@@ -207,6 +275,8 @@ void sortAscending(struct Student students[], int numStudents)
 {
     // Find the maximum length of names
     size_t maxNameLength = findMaxNameLength(students, numStudents);
+
+    printf("\nSort scores in ascending order :\n");
 
     // Print table header
     printTableHeader(maxNameLength);
@@ -239,6 +309,8 @@ void sortDescending(struct Student students[], int numStudents)
 {
     // Find the maximum length of names
     size_t maxNameLength = findMaxNameLength(students, numStudents);
+
+    printf("\nSort scores in descending order :\n");
 
     // Print table header
     printTableHeader(maxNameLength);
@@ -364,12 +436,12 @@ void generateSummary(struct Student students[], int numStudents)
 
         // Save to file
         FILE *summaryFile = fopen("Summary.txt", "w");
-        fprintf(summaryFile, "%-10s | %-*s | %-6s\n", "Student ID", (int)maxNameLength, "Name", "Score");
+        fprintf(summaryFile, "%-10s | %-*s | %-6s\n", "Student ID", (int)maxNameLength + 2, "Name", "Score");
         fprintf(summaryFile, "--------------------------------------\n");
 
         for (int i = 0; i < numStudents; i++) 
         {
-            fprintf(summaryFile, "%-10s | %-*s | %.2lf\n", students[i].id, (int)maxNameLength, students[i].name, students[i].score);
+            fprintf(summaryFile, "%-10s | %-*s | %.2lf\n", students[i].id, (int)maxNameLength + 2, students[i].name, students[i].score);
         }
 
         // Print separator line
@@ -400,6 +472,8 @@ int main()
 
     int maxAttempts = 5;  // Maximum number of attempts
     int currentAttempt = 0;
+
+    printf("-------- Welcome to ScoreMate --------\n");
 
     // Loop to attempt opening the file
     do 
@@ -506,6 +580,7 @@ int main()
 
             case 9:
                 printf("End of program. Goodbye.\n");
+                printf("-----------------------------------------\n");
                 break;
 
             default:
